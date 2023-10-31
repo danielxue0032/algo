@@ -78,8 +78,6 @@
  * @return {number}
  */
 var removeDuplicates = function (nums) {
-  if (nums.length < 2) return nums.length;
-
   let slow = 0
   let fast = 0
 
@@ -92,8 +90,8 @@ var removeDuplicates = function (nums) {
       fast++
     }
   }
+
   return slow + 1
 };
-// console.log(removeDuplicates([1, 2]))
 // @lc code=end
 

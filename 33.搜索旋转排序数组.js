@@ -74,33 +74,29 @@ var search = function (nums, target) {
 
   while (left <= right) {
     const mid = left + ((right - left) >> 1)
+    if (nums[mid] === target) {
+      return mid
+    }
 
-    console.log(`left: ${left}, right: ${right}, mid: ${mid}`)
-
-    if (nums[mid] === target) return mid
-
-    // 左边是有序的
+    // 左边有序
     if (nums[left] <= nums[mid]) {
-
-      // 如果目标在左边，查找范围缩小到[left, mid - 1]
       if (nums[left] <= target && target < nums[mid]) {
         right = mid - 1
       } else {
-        // 否则，查找范围缩小到[mid + 1, right]
         left = mid + 1
       }
     } else {
-      // 右边是有序的
+      // 右边有序
       if (nums[mid] < target && target <= nums[right]) {
         left = mid + 1
       } else {
         right = mid - 1
       }
-
     }
   }
+
   return -1
-};
+}
 
 // @lc code=end
 

@@ -49,25 +49,22 @@
 var generateParenthesis = function (n) {
   const res = []
 
-  const dfs = (l, r, s) => {
-    // 左括号比右括号少，就不可能有有效的括号组合
+  const backtrace = (l, r, path) => {
+    // 左括号少于右括号，已经无效
     if (l < r) return
-    if (l === n && r === n) return res.push(s)
+
+    if (l === n && r === n) return res.push(path)
 
     if (l < n) {
-      dfs(l + 1, r, s + '(')
+      backtrace(l + 1, r, path + '(')
     }
-
     if (r < n) {
-      dfs(l, r + 1, s + ')')
+      backtrace(l, r + 1, path + ')')
     }
   }
 
-  dfs(0, 0, '')
-
+  backtrace(0, 0, '')
   return res
-};
-
-generateParenthesis(3)
+}
 // @lc code=end
 

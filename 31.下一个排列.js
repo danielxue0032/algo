@@ -81,15 +81,10 @@ var nextPermutation = function (nums) {
   let k = nums.length - 1
 
   // 从后开始，找到第一个 相邻升序 的序列[i, j]
+  // find A[i] < A[j]
   while (i >= 0 && nums[i] >= nums[j]) {
     i--
     j--
-  }
-
-  const swap = function (array, index1, index2) {
-    const temp = array[index1]
-    array[index1] = array[index2]
-    array[index2] = temp
   }
 
   // 不是最后一个排列，比如 3 2 1， 经过上面的查找后，i 是 -1，j 是0
@@ -109,6 +104,12 @@ var nextPermutation = function (nums) {
   }
 
 };
+
+function swap(array, index1, index2) {
+  const temp = array[index1]
+  array[index1] = array[index2]
+  array[index2] = temp
+}
 // console.log(nextPermutation([1, 5, 1]))
 // @lc code=end
 

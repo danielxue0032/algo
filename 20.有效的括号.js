@@ -63,6 +63,8 @@
  * @return {boolean}
  */
 var isValid = function (s) {
+  if (s.length % 2 === 1) return false
+
   const map = new Map([
     ['(', ')'],
     ['[', ']'],

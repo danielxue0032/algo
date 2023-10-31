@@ -65,26 +65,24 @@
  * @return {number[][]}
  */
 var combinationSum = function (candidates, target) {
-  // 参数和返回值、终止条件、单层搜索逻辑
+  // 回溯三部曲：参数和返回值，终止条件，单层搜索逻辑
   const res = []
-  // 通过排序，剪枝
+
   candidates.sort((a, b) => a - b)
-  backtrace(res, candidates, target, [], 0)
+  backTrace(res, candidates, target, [], 0)
+
   return res
 };
 
-var backtrace = function (result, candidates, target, path, startIndex) {
+const backTrace = (result, candidates, target, path, startIndex) => {
   if (target === 0) return result.push([...path])
 
-  for (let index = startIndex; index < candidates.length; index++) {
-    const element = candidates[index];
-    const remain = target - element;
+  for (let i = startIndex; i < candidates.length; i++) {
+    // candidates 是升序的，如果当前已经大于 target，后面就不用遍历了
+    if (target - candidates[i] < 0) break;
 
-    // candidates是升序的，如果当前元素已经大于目标值，那么后面都可以跳过了
-    if (remain < 0) break
-
-    path.push(element)
-    backtrace(result, candidates, remain, path, index)
+    path.push(candidates[i])
+    backTrace(result, candidates, target - candidates[i], path, i)
     path.pop()
   }
 }

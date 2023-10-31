@@ -62,21 +62,24 @@
  * @return {ListNode}
  */
 var swapPairs = function (head) {
-  const dummyHead = new ListNode()
-  dummyHead.next = head
+  const dummy = new ListNode(-1)
+  dummy.next = head
 
-  let temp = dummyHead
-  while (temp.next !== null && temp.next.next !== null) {
+  let cur = dummy
+  while (cur.next !== null && cur.next.next !== null) {
+    const node1 = cur.next
+    const node2 = cur.next.next
+
     // 交换 temp 后面两个元素, temp -> node1 -> node2 交换后 temp -> node2 -> node1
-    const node1 = temp.next
-    const node2 = temp.next.next
-    temp.next = node2
-    node1.next = node2.next
+    const temp = node2.next
+    node1.next = temp
     node2.next = node1
-    temp = node1
+    cur.next = node2
+
+    cur = node1
   }
 
-  return dummyHead.next;
+  return dummy.next
 };
 // @lc code=end
 
