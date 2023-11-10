@@ -70,7 +70,7 @@ var swapPairs = function (head) {
     const node1 = cur.next
     const node2 = cur.next.next
 
-    // 交换 temp 后面两个元素, temp -> node1 -> node2 交换后 temp -> node2 -> node1
+    // 交换 cur 后面两个元素, cur -> node1 -> node2 -> temp 交换后 cur -> node2 -> node1 -> temp
     const temp = node2.next
     node1.next = temp
     node2.next = node1
