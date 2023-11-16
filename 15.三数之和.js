@@ -77,7 +77,7 @@ var threeSum = function (nums) {
   nums.sort((a, b) => a - b);
 
   // [a,b,c], 第一层枚举 a
-  for (let first = 0; first < len; first++) {
+  for (let first = 0; first < len - 2; first++) {
     // 排序后，如果第一个元素已经大于0，不可能凑成三元组
     if (nums[first] > 0) {
       break

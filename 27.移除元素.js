@@ -78,35 +78,48 @@
  * @param {number} val
  * @return {number}
  */
+// var removeElement = function (nums, val) {
+//   // [1], 1 输出0 
+//   // [3,3] 3 输出 0 
+
+//   let left = 0;
+//   let right = nums.length - 1;
+
+//   while (left <= right) {
+//     // 找到左边等于 val 的元素
+//     while (left <= right && nums[left] !== val) {
+//       left++
+//     }
+
+//     // 找到右边不等于 val 的元素
+//     while (left <= right && nums[right] === val) {
+//       right--
+//     }
+
+//     // 从右边找到了，更新到左边
+//     if (right >= left) {
+//       nums[left] = nums[right]
+//       right--
+//       left++
+//     } else {
+//       break;
+//     }
+//   }
+
+//   return left
+// };
+
 var removeElement = function (nums, val) {
-  // [1], 1 输出0 
-  // [3,3] 3 输出 0 
-
-  let left = 0;
-  let right = nums.length - 1;
-
-  while (left <= right) {
-    // 找到左边等于 val 的元素
-    while (left <= right && nums[left] !== val) {
-      left++
+  let slow = 0
+  let fast = 0
+  while (fast < nums.length) {
+    if (val !== nums[fast]) {
+      nums[slow] = nums[fast]
+      slow++
     }
-
-    // 找到右边不等于 val 的元素
-    while (left <= right && nums[right] === val) {
-      right--
-    }
-
-    // 从右边找到了，更新到左边
-    if (right >= left) {
-      nums[left] = nums[right]
-      right--
-      left++
-    } else {
-      break;
-    }
+    fast++
   }
-
-  return left
-};
+  return slow
+}
 // @lc code=end
 

@@ -75,8 +75,7 @@ var removeNthFromEnd = function (head, n) {
   let slow = dummy
   let fast = dummy
 
-  let i = 0
-  while (i++ < (n + 1) && fast !== null) {
+  while (n-- >= 0 && fast !== null) {
     fast = fast.next
   }
 
