@@ -1,0 +1,108 @@
+/*
+ * @lc app=leetcode.cn id=239 lang=javascript
+ *
+ * [239] 滑动窗口最大值
+ *
+ * https://leetcode.cn/problems/sliding-window-maximum/description/
+ *
+ * algorithms
+ * Hard (49.30%)
+ * Likes:    2605
+ * Dislikes: 0
+ * Total Accepted:    513.5K
+ * Total Submissions: 1M
+ * Testcase Example:  '[1,3,-1,-3,5,3,6,7]\n3'
+ *
+ * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k
+ * 个数字。滑动窗口每次只向右移动一位。
+ * 
+ * 返回 滑动窗口中的最大值 。
+ * 
+ * 
+ * 
+ * 示例 1：
+ * 
+ * 
+ * 输入：nums = [1,3,-1,-3,5,3,6,7], k = 3
+ * 输出：[3,3,5,5,6,7]
+ * 解释：
+ * 滑动窗口的位置                最大值
+ * ---------------               -----
+ * [1  3  -1] -3  5  3  6  7       3
+ * ⁠1 [3  -1  -3] 5  3  6  7       3
+ * ⁠1  3 [-1  -3  5] 3  6  7       5
+ * ⁠1  3  -1 [-3  5  3] 6  7       5
+ * ⁠1  3  -1  -3 [5  3  6] 7       6
+ * ⁠1  3  -1  -3  5 [3  6  7]      7
+ * 
+ * 
+ * 示例 2：
+ * 
+ * 
+ * 输入：nums = [1], k = 1
+ * 输出：[1]
+ * 
+ * 
+ * 
+ * 
+ * 提示：
+ * 
+ * 
+ * 1 <= nums.length <= 10^5
+ * -10^4 <= nums[i] <= 10^4
+ * 1 <= k <= nums.length
+ * 
+ * 
+ */
+
+// @lc code=start
+var MyQueue = function () {
+  this.queue = []
+}
+
+MyQueue.prototype.enqueue = function (val) {
+  // console.log('enqueue:', val, this.queue)
+  while (this.queue.length && val > this.queue[0]) {
+    this.queue.shift()
+  }
+  this.queue.push(val)
+}
+
+MyQueue.prototype.dequeue = function (val) {
+  // console.log('dequeue:', val, this.queue)
+  if (val === this.queue[0]) {
+    this.queue.shift()
+  }
+}
+
+MyQueue.prototype.front = function () {
+  // console.log('front:', this.queue)
+  return this.queue[0]
+}
+
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number[]}
+ */
+var maxSlidingWindow = function (nums, k) {
+  const queue = new MyQueue()
+  const res = []
+
+  for (let i = 0; i < k; i++) {
+    queue.enqueue(nums[i])
+  }
+  res.push(queue.front())
+
+  for (let i = k; i < nums.length; i++) {
+    queue.dequeue(nums[i - k])
+    queue.enqueue(nums[i])
+    res.push(queue.front())
+  }
+  return res
+};
+// console.log(maxSlidingWindow([1, -1], 1))
+// console.log(maxSlidingWindow([7, 2, 4], 2))
+
+// @lc code=end
+
