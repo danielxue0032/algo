@@ -60,7 +60,7 @@
  * @return {number}
  */
 var minDepth = function(root) {
-  if (root === null) return root
+  if (root === null) return null
   const queue = [root]
   let depth = 0
   while(queue.length) {
