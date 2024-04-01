@@ -15,14 +15,14 @@
  *
  * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k
  * 个数字。滑动窗口每次只向右移动一位。
- * 
+ *
  * 返回 滑动窗口中的最大值 。
- * 
- * 
- * 
+ *
+ *
+ *
  * 示例 1：
- * 
- * 
+ *
+ *
  * 输入：nums = [1,3,-1,-3,5,3,6,7], k = 3
  * 输出：[3,3,5,5,6,7]
  * 解释：
@@ -34,75 +34,63 @@
  * ⁠1  3  -1 [-3  5  3] 6  7       5
  * ⁠1  3  -1  -3 [5  3  6] 7       6
  * ⁠1  3  -1  -3  5 [3  6  7]      7
- * 
- * 
+ *
+ *
  * 示例 2：
- * 
- * 
+ *
+ *
  * 输入：nums = [1], k = 1
  * 输出：[1]
- * 
- * 
- * 
- * 
+ *
+ *
+ *
+ *
  * 提示：
- * 
- * 
+ *
+ *
  * 1 <= nums.length <= 10^5
  * -10^4 <= nums[i] <= 10^4
  * 1 <= k <= nums.length
- * 
- * 
+ *
+ *
  */
 
 // @lc code=start
-var MyQueue = function () {
-  this.queue = []
+function MyQueue() {
+  this.queue = [];
 }
-
-MyQueue.prototype.enqueue = function (val) {
-  // console.log('enqueue:', val, this.queue)
-  while (this.queue.length && val > this.queue[0]) {
-    this.queue.shift()
+MyQueue.prototype.push = function (x) {
+  while (this.queue.length && x > this.queue[this.queue.length - 1]) {
+    this.queue.pop();
   }
-  this.queue.push(val)
-}
-
-MyQueue.prototype.dequeue = function (val) {
-  // console.log('dequeue:', val, this.queue)
-  if (val === this.queue[0]) {
-    this.queue.shift()
+  this.queue.push(x);
+};
+MyQueue.prototype.pop = function (x) {
+  if (x === this.queue[0]) {
+    this.queue.shift();
   }
-}
+};
+MyQueue.prototype.getMaxValue = function () {
+  return this.queue[0];
+};
 
-MyQueue.prototype.front = function () {
-  // console.log('front:', this.queue)
-  return this.queue[0]
-}
-
-/**
- * @param {number[]} nums
- * @param {number} k
- * @return {number[]}
- */
 var maxSlidingWindow = function (nums, k) {
-  const queue = new MyQueue()
-  const res = []
+  const queue = new MyQueue();
+  const res = [];
 
   for (let i = 0; i < k; i++) {
-    queue.enqueue(nums[i])
+    queue.push(nums[i]);
   }
-  res.push(queue.front())
-
+  res.push(queue.getMaxValue());
+  // 移动窗口，从 k 到 length-1 次
   for (let i = k; i < nums.length; i++) {
-    queue.dequeue(nums[i - k])
-    queue.enqueue(nums[i])
-    res.push(queue.front())
+    queue.pop(nums[i - k]);
+    queue.push(nums[i]);
+    res.push(queue.getMaxValue());
   }
-  return res
+  return res;
 };
 // console.log(maxSlidingWindow([1, -1], 1))
 // console.log(maxSlidingWindow([7, 2, 4], 2))
 
 // @lc code=end
-
